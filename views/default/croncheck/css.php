@@ -1,10 +1,8 @@
 <?php ?>
-
-#croncheck td{
-	padding: 0 5px;
+#croncheck_information .elgg-head {
+	cursor: default;
 }
 
-#croncheck th {
-	padding: 0 5px;
-	font-weight: bold;
+#croncheck_functions {
+	display: none;
 }

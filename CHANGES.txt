@@ -1,6 +1,8 @@
 = Version History =
 x.x:
 
+- added: admin widget
+- changed: made plugin Elgg 1.8 compatible
 - changed: moved changelog to CHANGES.txt
 
 1.0.1 (2011-05-30):
