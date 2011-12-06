@@ -8,15 +8,3 @@
 	<field key="licence" value="GNU Public License version 2" />
 	<field key="elgg_version" value="2009030702" />
 </plugin_manifest>
-<!--
-
-====================
-Version History
-====================
-1.0.1 (2011-05-30):
-	- changed: registering of cron hooks
-
-1.0:
-	- initial version
-
--->

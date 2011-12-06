@@ -1,0 +1,12 @@
+= Version History =
+x.x:
+
+- changed: moved changelog to CHANGES.txt
+
+1.0.1 (2011-05-30):
+
+- changed: registering of cron hooks
+
+1.0:
+
+- initial version
