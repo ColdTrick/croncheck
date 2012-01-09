@@ -11,7 +11,13 @@
 		$allowed_crons = array("reboot", "minute", "fiveminute", "fifteenmin", "halfhour", "hourly", "daily", "weekly", "monthly", "yearly");
 		
 		if(in_array($entity_type, $allowed_crons)){
-			elgg_set_plugin_setting("latest_" . $entity_type . "_ts", time(), "croncheck");
+			if(isseT($params["time"])){
+				$time = $params["time"];
+			} else {
+				$time = time();
+			}
+			
+			elgg_set_plugin_setting("latest_" . $entity_type . "_ts", $time, "croncheck");
 		}
 	}
 	
