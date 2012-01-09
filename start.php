@@ -11,7 +11,7 @@
 		$allowed_crons = array("reboot", "minute", "fiveminute", "fifteenmin", "halfhour", "hourly", "daily", "weekly", "monthly", "yearly");
 		
 		if(in_array($entity_type, $allowed_crons)){
-			if(isseT($params["time"])){
+			if(isset($params["time"])){
 				$time = $params["time"];
 			} else {
 				$time = time();
