@@ -35,12 +35,14 @@
 	
 	$info_table .= "</table>";
 	
+	echo elgg_view_module($module, $info_title, $info_table);
+	
 	// show which functions are registerd to every interval
 	if(!empty($vars["toggle"])){
 		$module = "info";
 		$functions_title = "<br />" . elgg_view("output/url", array("text" => elgg_echo("croncheck:registered"), "href" => "#croncheck_functions", "rel" => "toggle"));
 		
-		$functions_table = "<table id='croncheck_functions' class='elgg-table'>";
+		$functions_table = "<table id='croncheck_functions' class='elgg-table hidden'>";
 	} else {
 		$module = "inline";
 		$functions_title = elgg_echo("croncheck:registered");
@@ -71,8 +73,5 @@
 	
 	$functions_table .= "</table>";
 	
-	// @todo remove widget wrapper if Trac #4186 is fixed
-	echo "<div id='croncheck_information'>";
-	echo elgg_view_module($module, $info_title, $info_table);
 	echo elgg_view_module($module, $functions_title, $functions_table);
-	echo "</div>";
+	
