@@ -1,7 +1,47 @@
 <?php 
 
-	global $CONFIG;
-	$cronhooks = $CONFIG->hooks["cron"];
+	if (!function_exists('_croncheck_describe_callable')) {
+		function _croncheck_describe_callable($callable) {
+			if (is_string($callable)) {
+				return $callable;
+			}
+			if (is_array($callable) && array_keys($callable) === array(0, 1) && is_string($callable[1])) {
+				if (is_string($callable[0])) {
+					return "{$callable[0]}::{$callable[1]}";
+				}
+				return "(" . get_class($callable[0]) . ")->{$callable[1]}";
+			}
+			if ($callable instanceof Closure) {
+				$ref = new ReflectionFunction($callable);
+				$file = $ref->getFileName();
+				$line = $ref->getStartLine();
+				$path_base = elgg_get_root_path();
+				if ($path_base && 0 === strpos($file, $path_base)) {
+					$file = substr($file, strlen($path_base));
+				}
+				return "(Closure {$file}:{$line})";
+			}
+			if (is_object($callable)) {
+				return "(" . get_class($callable) . ")->__invoke";
+			}
+			return "(?)";
+		}
+	}
+
+	if (function_exists('_elgg_services')) {
+		// 1.9 This is private API and may change!
+		try {
+			$dic = _elgg_services();
+			$all_hooks = _elgg_services()->hooks->getAllHandlers();
+			$cronhooks = $all_hooks['cron'];
+		} catch (Exception $e) {
+			$cronhooks = array();
+		}
+	} else {
+		global $CONFIG;
+		$cronhooks = $CONFIG->hooks["cron"];
+	}
+	
 	$intervals = array("reboot", "minute", "fiveminute", "fifteenmin", "halfhour", "hourly", "daily", "weekly", "monthly", "yearly");
 	
 	// Info part
@@ -61,7 +101,7 @@
 		if(array_key_exists($interval, $cronhooks) && count($cronhooks[$interval]) >= 1){
 			$functions_table .= "<td>";
 			foreach($cronhooks[$interval] as $function){
-				$functions_table .= $function . "<br />";
+				$functions_table .= _croncheck_describe_callable($function) . "<br />";
 			}
 			$functions_table .= "</td>";
 		} else {
